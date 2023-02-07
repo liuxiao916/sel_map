@@ -33,7 +33,7 @@ def syncedCallback(rgb, depth, info, pose=None, meta=None):
     # get poses ready #TODO bring robot back into picture
     if pose is None:
         try:
-            tf_stamped = tfBuffer.lookup_transform(world_base, depth.header.frame_id, depth.header.stamp, rospy.Duration(0.01))
+            tf_stamped = tfBuffer.lookup_transform(world_base, depth.header.frame_id, depth.header.stamp, rospy.Duration(0.1))
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             return
         location = tf_stamped.transform.translation

@@ -1,11 +1,36 @@
 # sel_map (Semantic ELevation Map)
+## Difference with original repository
+### ORB SLAM3 
+Using ORB SLAM3 to get Visual Odometry so that we can use our own datasets.
+1. Install [ORB SLAM3](https://github.com/UZ-SLAMLab/ORB_SLAM3)  
+   * Follow the instructions to install ORB SLAM3.
+   * Suggest OPENCV 4.4. Otherwise you may encounter some problems. (You can solve these problems with the help of issues)
+   * If you meet the error about Pangolin, please downgrade it to [0.5 version](https://github.com/stevenlovegrove/Pangolin/tree/v0.5).
+2. To get the tf relationship between camera and world, please install [ORB SLAM3 Wrapper](https://github.com/thien94/orb_slam3_ros_wrapper)
+    * Just Follow the instructions to install it. 
+    * You can get realsense [D435i config file](https://github.com/UZ-SLAMLab/ORB_SLAM3/blob/master/Examples/RGB-D/RealSense_D435i.yaml) in ORB SLAM3 example folder.
+
+Run this launch file to check the installation of ORB SLAM3.
+``` sh
+roslaunch sel_map realsense_slam.launch
+```
+
+### Adapted for Realsense D435
+I modified the main file to run sel_map with realsense D435 and ORB SLAM3.
+``` sh
+roslaunch sel_map spot_realsense.launch
+```
+
+---
+
+## Introduction
 **Authors:** Parker Ewen (pewen@umich.edu), Adam Li (adamli@umich.edu), Yuxin Chen (chyuxin@umich.edu), Steven Hong (hongsn@umich.edu), and Ram Vasudevan (ramv@umich.edu). 
 
 - All authors are affiliated with the Robotics Institute and department of Mechanical Engineering of the University of Michigan, 2505 Hayward Street, Ann Arbor, Michigan, USA.
 - This work is supported by the Ford Motor Company via the Ford-UM Alliance under award N022977, by the Office of Naval Research under award number N00014-18-1-2575, and in part by the National Science Foundation under Grant 1751093.
 - `sel_map` was developed in [Robotics and Optimization for Analysis of Human Motion (ROAHM) Lab](http://www.roahmlab.com/) at University of Michigan - Ann Arbor.
 
-## Introduction
+
 <img align="right" height="230" src="/figures/main.png"/>
 
 Semantic ELevation (SEL) map is a semantic Bayesian inferencing framework for real-time elevation mapping and terrain property estimation. The package takes the inputs from RGB-D cameras and robot poses, and recursively estimates both the terrain surface profile and a probability distribution for terrain properties. The package can be deployed on a physical legged robotic platform in both indoor and outdoor environments. The semantic networks used in this package are modular and interchangeable, better performance can be achieved using the specific trained networks for the corresponding applications. This package provides several examples such as ResNet-50. The dataset for terrain friction can be found in [terrain_friction_dataset](https://github.com/roahmlab/terrain_friction_dataset) repository. The link to the project website is [here](https://roahmlab.github.io/sel_map/).
