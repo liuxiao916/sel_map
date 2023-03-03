@@ -81,7 +81,7 @@ def syncedCallback(rgb, depth, info, pose=None, meta=None):
 
     # Update the map
     # indoor data seems to have negative depth values resulting in a seg fault
-    map.update(pose, rgbd, intrinsic=intrinsic, R=R, min_depth=0.5, max_depth=8.0)
+    map.update(pose, rgbd, intrinsic=intrinsic, R=R, min_depth=0.5, max_depth=8.0)   # 这里是重要的一步，把pose和rgbd信息送进去了。
     
     # Queue a new publish (without saving for now)
     if savingFlag:

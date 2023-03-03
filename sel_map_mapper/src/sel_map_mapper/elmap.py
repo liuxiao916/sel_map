@@ -173,7 +173,7 @@ class Map:
                                     float(prop_dict[key]['color']['B'])/255.0,1) for key in keys_list]
             else:
                 # Map the friction to the colors
-                materials = [ColorRGBA(*colorscale.mapToColor(prop_dict[key]['friction']['mean']),1) for key in keys_list]
+                materials = [ColorRGBA(*colorscale.mapToColor(prop_dict[key]['friction']['mean']),1) for key in keys_list]     #这里的*应该是序列揭包用的。
             self.materials.materials = [MeshMaterial(color=materials[i], has_texture=False) for i in range(len(materials))]
             self.materials.cluster_materials = np.array(range(len(materials)))
         
@@ -263,8 +263,8 @@ class Map:
         poseCameraToMap.location = pose.location - self.origin.location
         poseCameraToMap.rotation = pose.rotation
         self.camera.setPoseCameraToMap(poseCameraToMap)
-        self.camera.updateSensorMeasurements(rgbd[0], rgbd[1])
-        points = self.camera.getProjectedPointCloudWithLabels(intrinsic=intrinsic, R=R, min_depth=min_depth, max_depth=max_depth)
+        self.camera.updateSensorMeasurements(rgbd[0], rgbd[1])   # 在camera这个类中更新测量数据，迭代的步骤并不在这里。
+        points = self.camera.getProjectedPointCloudWithLabels(intrinsic=intrinsic, R=R, min_depth=min_depth, max_depth=max_depth)   #这里是关键一步，得到带有标签的点云。
         # Shift and rotate as needed
         points[:,:3] = pose.location + np.dot(points[:,:3], np.transpose(pose.rotation))
         
@@ -277,7 +277,7 @@ class Map:
         # o3d.visualization.draw_geometries([pcd, axes])
         
         # Advance and clean the map (lazy can be true if the points pushed to the map is relatively constant)
-        self.mesh.advance(classpoints=points, z_height=pose.location[2])
+        self.mesh.advance(classpoints=points, z_height=pose.location[2])    # 理论上来说，传到这里的points，是point with label
         self.mesh.clean(lazy=True)
 
         # Publish the camera pose synchronously
